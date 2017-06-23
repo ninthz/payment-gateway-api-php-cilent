@@ -2,23 +2,24 @@
 
 require_once('bootstrap.php');
 
-use PaymentGatewayClient\ApplicationAuthenticate;
+use PaymentGatewayClient\Transaction;
 
 $app = getenv('APP');
 $key = getenv('KEY');
+
 $base_uri = getenv('BASE_URI');
 $version = getenv('VERSION');
 
-$applicationAuthenticate = new ApplicationAuthenticate();
+$transaction = new Transaction();
 
-$applicationAuthenticate->setBaseUri($base_uri);
-$applicationAuthenticate->getVersion($version);
-$applicationAuthenticate->setTestapi();
+$transaction->setBaseUri($base_uri);
+$transaction->getVersion($version);
+$transaction->setTestapi();
 
-$applicationAuthenticate->setCredential($app, $key);
+$transaction->setCredential($app, $key);
 
 try {
-    $response = $applicationAuthenticate->auth();
+    $response = $transaction->find(2);
 
     if ($response->isSuccuss()) {
         print_success_result($response);
