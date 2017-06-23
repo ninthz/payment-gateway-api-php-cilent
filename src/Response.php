@@ -39,6 +39,11 @@ class Response
         return $this;
     }
 
+    public function getResponse()
+    {
+        return $this->response;
+    }
+
     public function getStatusCode()
     {
         return $this->response->getStatusCode();

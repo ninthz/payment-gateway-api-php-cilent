@@ -4,7 +4,7 @@ namespace PaymentGatewayClient;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-
+use PaymentGatewayClient\Exceptions\HostHandshakeFailed;
 
 class PaymentGatewayClient
 {
@@ -68,7 +68,7 @@ class PaymentGatewayClient
         }
 
         try {
-            
+
             $response = $this->client->request($httpMethod, $this->packUri(static::RESOURCE.'/'.$pathUri), $options);
 
             $this->response->setResponse($response);
@@ -76,6 +76,12 @@ class PaymentGatewayClient
         } catch (RequestException $e) {
             if ($e->hasResponse()) {
                 $this->response->setResponse($e->getResponse());
+            } else {
+                $handlerContext = $e->getHandlerContext();
+
+                if ($handlerContext['errno'] == 6) {
+                    throw new HostHandshakeFailed();
+                }
             }
         }
 

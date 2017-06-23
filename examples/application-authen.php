@@ -17,11 +17,18 @@ $applicationAuthenticate->setTestapi();
 
 $applicationAuthenticate->setCredential($app, $key);
 
-$response = $applicationAuthenticate->auth();
+try {
+    $response = $applicationAuthenticate->auth();
 
+    if ($response->isSuccuss()) {
+        print_success_result($response);
+    } else {
+        print_failure_result($response);
+    }
 
-if ($response->isSuccuss()) {
-    print_success_result($response);
-} else {
-    print_failure_result($response);
+} catch (\PaymentGatewayClient\Exceptions\HostHandshakeFailed $e) {
+    echo $e->getMessage();
 }
+
+
+
