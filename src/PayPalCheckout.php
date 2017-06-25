@@ -8,8 +8,20 @@ class PayPalCheckout extends PaymentGatewayClient
 
     const METHOD = 'checkout';
 
-    function checkout($data)
+    function setCheckout($data)
     {
-        return $this->post(self::METHOD, $data);
+        return $this->post(self::METHOD.'/set', $data);
+    }
+
+    function doCheckout($data)
+    {
+        $data = array_merge($data, ['approval' => true]);
+        return $this->post(self::METHOD.'/do', $data);
+    }
+
+    function cancelCheckout($data)
+    {
+        $data = array_merge($data, ['approval' => false]);
+        return $this->post(self::METHOD.'/do', $data);
     }
 }

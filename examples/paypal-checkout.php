@@ -23,7 +23,7 @@ $data = [
     ]
 ];
 
-$response = $paypalCheckout->checkout($data);
+$response = $paypalCheckout->setCheckout($data);
 
 if ($response->isSuccuss()) {
     print_success_result($response);
