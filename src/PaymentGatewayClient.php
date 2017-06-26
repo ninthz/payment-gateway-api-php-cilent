@@ -28,10 +28,9 @@ class PaymentGatewayClient
         if(function_exists('config'))
         {
             $mode = config('payment-gateway.mode');
-            $this->url = 'http://' .
-                ( $mode == 'test' ? 'test-api' : 'live') . '.' .
-                config('payment-gateway.base_uri') . '/' .
-                config('payment-gateway.version') . '/';
+            $this->base_uri = config('payment-gateway.base_uri');
+            $this->subdomain = ( $mode == 'test' ? 'testapi' : 'api');
+            $this->version = config('payment-gateway.version');
 
             $this->credential = new Credential(config('payment-gateway.'.$mode.'.app'), config('payment-gateway.'.$mode.'.key'));
         }
