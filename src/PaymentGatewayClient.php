@@ -54,6 +54,21 @@ class PaymentGatewayClient
         return $this->response;
     }
 
+    public function put($method = '', $data = [])
+    {
+        $this->fire('put', $method, $data);
+
+        return $this->response;
+    }
+
+    public function delete($method = '')
+    {
+        $this->fire('DELETE', $method);
+
+        return $this->response;
+    }
+
+
     public function fire($httpMethod, $pathUri, $data = [])
     {
         $options = [
