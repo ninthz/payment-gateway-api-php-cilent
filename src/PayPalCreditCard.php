@@ -19,9 +19,13 @@ class PayPalCreditCard extends PaymentGatewayClient
         return $this->get(self::METHOD.'/'.$id);
     }
 
-    public function list()
+    public function list($resellerId = '')
     {
-        return $this->get(self::METHOD);
+        if ($resellerId) {
+            $resellerId = '?reseller-id='.$resellerId;
+        }
+
+        return $this->get(self::METHOD.$resellerId);
     }
 
     public function update(int $id, array $data)
