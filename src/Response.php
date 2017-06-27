@@ -51,6 +51,10 @@ class Response
 
     public function getErrorMessage()
     {
-        return $this->toJson()->message;
+        if ($this->response->getStatusCode() == 422) {
+            return 'There was a missing or invalid parameter';
+        } else {
+            return $this->toJson()->message;
+        }
     }
 }
