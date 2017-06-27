@@ -37,4 +37,9 @@ class PayPalCreditCard extends PaymentGatewayClient
     {
         return $this->delete(self::METHOD.'/'.$id);
     }
+
+    public function payment($data)
+    {
+        return $this->post(self::METHOD.'/payment', $data);
+    }
 }
