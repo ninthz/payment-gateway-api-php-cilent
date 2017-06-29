@@ -14,7 +14,7 @@ class PayPalCreditCard extends PaymentGatewayClient
         return $this->post(self::METHOD, $data);
     }
 
-    public function find(int $id)
+    public function find($id)
     {
         return $this->get(self::METHOD.'/'.$id);
     }
@@ -28,12 +28,12 @@ class PayPalCreditCard extends PaymentGatewayClient
         return $this->get(self::METHOD.$resellerId);
     }
 
-    public function update(int $id, array $data)
+    public function update($id, array $data)
     {
         return $this->put(self::METHOD.'/'.$id, $data);
     }
 
-    public function remove(int $id)
+    public function remove($id)
     {
         return $this->delete(self::METHOD.'/'.$id);
     }
