@@ -42,4 +42,9 @@ class PayPalCreditCard extends PaymentGatewayClient
     {
         return $this->post(self::METHOD.'/payment', $data);
     }
+
+    public function paymentWithoutSavedCard(array $data)
+    {
+        return $this->post(self::METHOD.'/payment-no-saved-card', $data);
+    }
 }
