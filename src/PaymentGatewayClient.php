@@ -8,14 +8,18 @@ use PaymentGatewayClient\Exceptions\HostHandshakeFailed;
 
 class PaymentGatewayClient
 {
-    const TEST_MODE = 'testapi';
+    const TEST_MODE = 'apitest';
     const LIVE_MODE = 'api';
 
     protected $subdomain = 'api';
 
-    protected $base_uri = 'payment-gateway.netearth.net';
+    protected $base_uri = 'idcdeposit.com';
 
     protected $version = 'v1';
+
+    protected $certificatePath = false;
+
+    protected $tcp = 'https';
 
     protected $client;
 
@@ -29,10 +33,12 @@ class PaymentGatewayClient
         {
             $mode = config('payment-gateway.mode');
             $this->base_uri = config('payment-gateway.base_uri');
-            $this->subdomain = ( $mode == 'test' ? 'testapi' : 'api');
+            $this->subdomain = ( $mode == 'test' ? self::TEST_MODE : self::LIVE_MODE );
             $this->version = config('payment-gateway.version');
 
             $this->credential = new Credential(config('payment-gateway.'.$mode.'.app'), config('payment-gateway.'.$mode.'.key'));
+            $this->certificatePath = config('payment-gateway.certificate');
+            $this->tcp = config('payment-gateway.tcp');
         }
 
         $this->client = new Client();
@@ -56,7 +62,7 @@ class PaymentGatewayClient
 
     public function put($method = '', $data = [])
     {
-        $this->fire('put', $method, $data);
+        $this->fire('PUT', $method, $data);
 
         return $this->response;
     }
@@ -72,7 +78,8 @@ class PaymentGatewayClient
     public function fire($httpMethod, $pathUri, $data = [])
     {
         $options = [
-            'headers' => $this->credential->toHeaders()
+            'headers' => $this->credential->toHeaders(),
+            'verify' => $this->getCertificatePath()
         ];
 
         if (!empty($data)) {
@@ -88,6 +95,9 @@ class PaymentGatewayClient
             $this->response->setResponse($response);
 
         } catch (RequestException $e) {
+
+            print_r($e->getHandlerContext());
+
             if ($e->hasResponse()) {
                 $this->response->setResponse($e->getResponse());
             } else {
@@ -106,7 +116,7 @@ class PaymentGatewayClient
      */
     public function getUrl()
     {
-        return 'http://'.$this->subdomain.'.'.$this->base_uri.'/'.$this->version.'/';
+        return 'https://'.$this->subdomain.'.'.$this->base_uri.'/'.$this->version.'/';
     }
 
     private function packUri($pathUri)
@@ -159,5 +169,16 @@ class PaymentGatewayClient
     {
         $this->version = $version;
         return $this;
+    }
+
+    public function setCertificatePath($certificatePath)
+    {
+        $this->certificatePath = $certificatePath;
+        return $this;
+    }
+
+    public function getCertificatePath()
+    {
+        return $this->certificatePath;
     }
 }

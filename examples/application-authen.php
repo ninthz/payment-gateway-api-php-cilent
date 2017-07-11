@@ -6,13 +6,9 @@ use PaymentGatewayClient\ApplicationAuthenticate;
 
 $app = getenv('APP');
 $key = getenv('KEY');
-$base_uri = getenv('BASE_URI');
-$version = getenv('VERSION');
 
 $applicationAuthenticate = new ApplicationAuthenticate();
 
-$applicationAuthenticate->setBaseUri($base_uri);
-$applicationAuthenticate->getVersion($version);
 $applicationAuthenticate->setTestapi();
 
 $applicationAuthenticate->setCredential($app, $key);
