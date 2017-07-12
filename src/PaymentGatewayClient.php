@@ -96,8 +96,6 @@ class PaymentGatewayClient
 
         } catch (RequestException $e) {
 
-            print_r($e->getHandlerContext());
-
             if ($e->hasResponse()) {
                 $this->response->setResponse($e->getResponse());
             } else {
