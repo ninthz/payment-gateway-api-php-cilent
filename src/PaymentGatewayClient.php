@@ -116,7 +116,7 @@ class PaymentGatewayClient
      */
     public function getUrl()
     {
-        return 'https://'.$this->subdomain.'.'.$this->base_uri.'/'.$this->version.'/';
+        return $this->tcp.'://'.$this->subdomain.'.'.$this->base_uri.'/'.$this->version.'/';
     }
 
     private function packUri($pathUri)
