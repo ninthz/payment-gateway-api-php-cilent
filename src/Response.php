@@ -24,7 +24,7 @@ class Response
         return json_decode($this->response->getBody(), true);
     }
 
-    function isSuccuss()
+    function isSuccess()
     {
         return $this->response->getStatusCode() == 200;
     }

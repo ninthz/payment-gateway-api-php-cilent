@@ -25,7 +25,7 @@ $data = [
 
 $response = $logicBoxesDebit->debit($data);
 
-if ($response->isSuccuss()) {
+if ($response->isSuccess()) {
     print_success_result($response);
 } else {
     print_failure_result($response);

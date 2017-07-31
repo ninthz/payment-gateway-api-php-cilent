@@ -16,7 +16,7 @@ $applicationAuthenticate->setCredential($app, $key);
 try {
     $response = $applicationAuthenticate->auth();
 
-    if ($response->isSuccuss()) {
+    if ($response->isSuccess()) {
         print_success_result($response);
     } else {
         print_failure_result($response);
