@@ -15,13 +15,16 @@ class PayPalBillingAgreement extends PaymentGatewayClient
 
     function create($data)
     {
-        $data = array_merge($data);
         return $this->post(self::METHOD.'/create', $data);
     }
 
     function doReferenceTransaction($data)
     {
-        $data = array_merge($data);
         return $this->post(self::METHOD.'/charge', $data);
+    }
+
+    function details($data)
+    {
+        return $this->post(self::METHOD.'/', $data);
     }
 }
