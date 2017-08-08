@@ -23,8 +23,13 @@ class PayPalBillingAgreement extends PaymentGatewayClient
         return $this->post(self::METHOD.'/charge', $data);
     }
 
-    function details($data)
+    function details($token)
     {
-        return $this->post(self::METHOD.'/', $data);
+        return $this->get(self::METHOD.'/'.$token);
+    }
+
+    function cancel($billingAgreementId)
+    {
+        return $this->delete(self::METHOD.'/'.$billingAgreementId);
     }
 }
